@@ -4,13 +4,13 @@ let timer = 30;
 let timerInterval;
 
 let taskSets = [
-    ["Собери бургер из булочки, мяса и сыра"],
-    ["Добавь огурцы и помидоры"],
-    ["Сделай бургер с двумя слоями мяса"],
-    ["Добавь листья салата и сыр"],
-    ["Собери бургер без мяса"],
-    ["Сделай двойной бургер с двумя булочками"],
-    ["Добавь все ингредиенты"]
+    ["Koosta kuklist, lihast ja juustust burger"],
+    ["Lisa kurgid ja tomatid"],
+    ["Tee burger kahe kihiga lihaga"],
+    ["Lisa salat ja juust"],
+    ["Ehitage burger ilma lihata"],
+    ["Tee kahe kukliga topeltburger"],
+    ["Lisa kõik koostisained"]
 ];
 
 let currentTaskIndex = 0;
@@ -37,7 +37,7 @@ function startTimer() {
         document.getElementById('timer-display').textContent = timer;
         if (timer <= 0) {
             clearInterval(timerInterval);
-            alert("Время вышло! Бургер не был собран вовремя.");
+            alert("Aeg on läbi! Burgerit ei pandud õigeks ajaks kokku.");
             pickRandomTaskSet();
         }
     }, 1000);
@@ -63,34 +63,34 @@ function updateBurgerPreview() {
 function checkTaskCompletion() {
     let allTasksCompleted = currentTaskSet.every(task => {
         switch (task) {
-            case "Собери бургер из булочки, мяса и сыра":
-                return burgerIngredients.includes('Булочка') && burgerIngredients.includes('Мясо') && burgerIngredients.includes('Сыр');
-            case "Добавь огурцы и помидоры":
-                return burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры');
-            case "Сделай бургер с двумя слоями мяса":
-                return burgerIngredients.filter(i => i === 'Мясо').length >= 2;
+            case "Koosta kuklist, lihast ja juustust burger":
+                return burgerIngredients.includes('kukkel') && burgerIngredients.includes('Liha') && burgerIngredients.includes('juust');
+            case "Lisa kurgid ja tomatid":
+                return burgerIngredients.includes('Kurgid') && burgerIngredients.includes('Tomatid');
+            case "Tee burger kahe kihiga lihaga":
+                return burgerIngredients.filter(i => i === 'Liha').length >= 2;
             case "Добавь листья салата и сыр":
-                return burgerIngredients.includes('Листья салата') && burgerIngredients.includes('Сыр');
+                return burgerIngredients.includes('Salati lehed') && burgerIngredients.includes('juust');
             case "Собери бургер без мяса":
-                return !burgerIngredients.includes('Мясо');
+                return !burgerIngredients.includes('Liha');
             case "Сделай двойной бургер с двумя булочками":
-                return burgerIngredients.filter(i => i === 'Булочка').length >= 2;
+                return burgerIngredients.filter(i => i === 'kukkel').length >= 2;
             case "Добавь все ингредиенты":
-                return ['Булочка', 'Мясо', 'Сыр', 'Огурцы', 'Помидоры', 'Листья салата'].every(ing => burgerIngredients.includes(ing));
+                return ['kukkel', 'Liha', 'juust', 'Kurgid', 'Tomatid', 'Salati lehed'].every(ing => burgerIngredients.includes(ing));
             default:
                 return false;
         }
     });
 
     if (allTasksCompleted) {
-        alert("Поздравляем! Вы собрали бургер по всем заданиям!");
+        alert("Palju õnne! Olete burgeri valmistamiseks kõik ülesanded täitnud!");
         pickRandomTaskSet();
     }
 }
 
 function saveBurger() {
     if (burgerIngredients.length === 0) {
-        alert("Ваш бургер пустой! Добавьте хотя бы один ингредиент.");
+        alert("Teie burger on tühi! Lisage vähemalt üks koostisosa.");
         return;
     }
 
