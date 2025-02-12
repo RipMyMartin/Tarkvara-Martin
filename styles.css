@@ -5,6 +5,10 @@ body {
     padding: 0;
 }
 
+.ingredient img {
+    width: 100px;
+}
+
 .container {
     width: 80%;
     margin: 0 auto;
