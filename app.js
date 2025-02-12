@@ -3,28 +3,48 @@ let savedBurgers = [];
 let timer = 30;
 let timerInterval;
 
-let tasks = [
+const tasks = [
     "Собери бургер из булочки, мяса и сыра",
-    "Добавь огурцы и помидоры"
+    "Добавь огурцы и помидоры",
+    "Сделай вегетарианский бургер с листьями салата, огурцами и помидорами",
+    "Добавь двойной сыр и мясо",
+    "Собери бургер с булочкой, листьями салата и сыром"
 ];
 
-let currentTaskIndex = 0;
+let currentTaskIndex = Math.floor(Math.random() * tasks.length);
 
 function updateTask() {
-    const taskList = document.getElementById('task-list');
-    const taskItem = document.createElement('li');
-    taskItem.textContent = tasks[currentTaskIndex];
-    taskList.innerHTML = '';
-    taskList.appendChild(taskItem);
+    const taskElement = document.getElementById("task");
+    if (taskElement) {
+        taskElement.textContent = `Текущая задача: ${tasks[currentTaskIndex]}`;
+    }
+}
+
+function refreshTask() {
+    let newTaskIndex;
+    do {
+        newTaskIndex = Math.floor(Math.random() * tasks.length);
+    } while (newTaskIndex === currentTaskIndex); // Исключаем повтор одного и того же задания
+
+    currentTaskIndex = newTaskIndex;
+    updateTask();
+    startTimer();
+    burgerIngredients = [];
+    updateBurgerPreview();
 }
 
 function startTimer() {
+    clearInterval(timerInterval);
+    timer = 30;
+    document.getElementById('timer-display').textContent = timer;
+
     timerInterval = setInterval(() => {
         timer--;
         document.getElementById('timer-display').textContent = timer;
         if (timer <= 0) {
             clearInterval(timerInterval);
             alert("Время вышло! Бургер не был собран вовремя.");
+            refreshTask(); // Обновляем задание после проигрыша
         }
     }, 1000);
 }
@@ -49,22 +69,27 @@ function updateBurgerPreview() {
 function checkTaskCompletion() {
     const task = tasks[currentTaskIndex];
 
-    if (task === "Собери бургер из булочки, мяса и сыра") {
-        if (burgerIngredients.includes('Булочка') && burgerIngredients.includes('Мясо') && burgerIngredients.includes('Сыр')) {
-            currentTaskIndex++;
-            updateTask();
-        }
-    }
+    const taskConditions = {
+        "Собери бургер из булочки, мяса и сыра": () =>
+            burgerIngredients.includes('Булочка') && burgerIngredients.includes('Мясо') && burgerIngredients.includes('Сыр'),
 
-    if (task === "Добавь огурцы и помидоры") {
-        if (burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры')) {
-            currentTaskIndex++;
-            updateTask();
-        }
-    }
+        "Добавь огурцы и помидоры": () =>
+            burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры'),
 
-    if (currentTaskIndex === tasks.length) {
-        alert("Поздравляем! Вы собрали бургер по всем заданиям!");
+        "Сделай вегетарианский бургер с листьями салата, огурцами и помидорами": () =>
+            burgerIngredients.includes('Листья салата') && burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры'),
+
+        "Добавь двойной сыр и мясо": () =>
+            burgerIngredients.filter(ing => ing === 'Сыр').length >= 2 &&
+            burgerIngredients.filter(ing => ing === 'Мясо').length >= 2,
+
+        "Собери бургер с булочкой, листьями салата и сыром": () =>
+            burgerIngredients.includes('Булочка') && burgerIngredients.includes('Листья салата') && burgerIngredients.includes('Сыр')
+    };
+
+    if (taskConditions[task] && taskConditions[task]()) {
+        alert(`Задание выполнено: "${task}"`);
+        refreshTask(); // Выбираем новое задание после успешного выполнения
     }
 }
 
@@ -75,9 +100,7 @@ function saveBurger() {
     }
 
     savedBurgers.push([...burgerIngredients]);
-
     localStorage.setItem('savedBurgers', JSON.stringify(savedBurgers));
-
     updateSavedBurgersTable();
 
     burgerIngredients = [];
@@ -108,6 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
         savedBurgers = JSON.parse(saved);
         updateSavedBurgersTable();
     }
+
     updateTask();
     startTimer();
+
+    const refreshButton = document.getElementById("refresh-task");
+    if (refreshButton) {
+        refreshButton.addEventListener("click", refreshTask);
+    }
 });
