@@ -9,10 +9,6 @@ npm i
 npm i express 
 ```
 
-```
-npm run dev
-```
-
 ### ülesanded
 
 1. stiilide lisamine
