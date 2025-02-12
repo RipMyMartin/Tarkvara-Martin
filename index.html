@@ -1,68 +1,65 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="et">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Собери бургер</title>
+  <title>Koosta oma burger</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-  <h1>Собери свой бургер</h1>
+  <h1>Koosta oma burger</h1>
 
-  <!-- Таймер -->
+  <!-- Taimer -->
   <div id="timer">
-    Время: <span id="timer-display">30</span> секунд
+    Aeg: <span id="timer-display">30</span> sekundit
   </div>
 
-  <!-- Задачи -->
+  <!-- Ülesanded -->
   <div id="task-container">
-    <h2>Задача:</h2>
+    <h2>Ülesanne:</h2>
     <ul id="task-list">
-      <li>Собери бургер из булочки, мяса и сыра</li>
-      <li>Добавь огурцы и помидоры</li>
+      <li>Koosta burger kuklist, lihast ja juustust</li>
+      <li>Lisa kurgid ja tomatid</li>
     </ul>
   </div>
-  <button id="refresh-task">Обновить задание</button>
-
-
+  <button id="refresh-task">Uuenda ülesannet</button>
 
   <div class="ingredients">
-    <h2>Ингредиенты</h2>
-    <button class="ingredient" onclick="addIngredient('Булочка')">
-      <img src="img/1.jpg" alt="Булочка">
+    <h2>Koostisosad</h2>
+    <button class="ingredient" onclick="addIngredient('Kukkel')">
+      <img src="img/1.jpg" alt="Kukkel">
     </button>
-    <button class="ingredient" onclick="addIngredient('Мясо')">
-      <img src="img/2.png" alt="Мясо">
+    <button class="ingredient" onclick="addIngredient('Liha')">
+      <img src="img/2.png" alt="Liha">
     </button>
-    <button class="ingredient" onclick="addIngredient('Сыр')">
-      <img src="img/3.png" alt="Сыр">
+    <button class="ingredient" onclick="addIngredient('Juust')">
+      <img src="img/3.png" alt="Juust">
     </button>
-    <button class="ingredient" onclick="addIngredient('Огурцы')">
-      <img src="img/4.png" alt="Огурцы">
+    <button class="ingredient" onclick="addIngredient('Kurgid')">
+      <img src="img/4.png" alt="Kurgid">
     </button>
-    <button class="ingredient" onclick="addIngredient('Помидоры')">
-      <img src="img/5.png" alt="Помидоры">
+    <button class="ingredient" onclick="addIngredient('Tomatid')">
+      <img src="img/5.png" alt="Tomatid">
     </button>
-    <button class="ingredient" onclick="addIngredient('Листья салата')">
-      <img src="img/6.png" alt="Листья салата">
+    <button class="ingredient" onclick="addIngredient('Salatilehed')">
+      <img src="img/6.png" alt="Salatilehed">
     </button>
   </div>
 
-
   <div class="burger-preview">
-    <h2>Ваш бургер</h2>
+    <h2>Sinu burger</h2>
     <ul id="burger-list"></ul>
-    <button id="save-button" onclick="saveBurger()">Сохранить бургер</button>
+    <button id="save-button" onclick="saveBurger()">Salvesta burger</button>
   </div>
 
   <div class="saved-burgers">
-    <h2>Сохраненные бургеры</h2>
+    <h2>Salvestatud burgerid</h2>
     <table id="burger-table">
       <thead>
       <tr>
-        <th>Номер</th>
-        <th>Ингредиенты</th>
+        <th>Number</th>
+        <th>Koostisosad</th>
       </tr>
       </thead>
       <tbody></tbody>

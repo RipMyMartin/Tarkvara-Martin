@@ -1,142 +1,113 @@
-let burgerIngredients = [];
-let savedBurgers = [];
-let timer = 30;
-let timerInterval;
+let burgeriKoostisosad = [];
+let salvestatudBurgerid = [];
+let taimer = 30;
+let taimeriIntervall;
 
-const tasks = [
-    "Собери бургер из булочки, мяса и сыра",
-    "Добавь огурцы и помидоры",
-    "Сделай вегетарианский бургер с листьями салата, огурцами и помидорами",
-    "Добавь двойной сыр и мясо",
-    "Собери бургер с булочкой, листьями салата и сыром"
+let ülesanded = [
+    "Koosta burger kuklist, lihast ja juustust",
+    "Lisa kurgid ja tomatid"
 ];
 
-let currentTaskIndex = Math.floor(Math.random() * tasks.length);
+let praeguneÜlesandeIndeks = 0;
 
-function updateTask() {
-    const taskElement = document.getElementById("task");
-    if (taskElement) {
-        taskElement.textContent = `Текущая задача: ${tasks[currentTaskIndex]}`;
-    }
+function uuendaÜlesannet() {
+    const ülesanneteNimekiri = document.getElementById('task-list');
+    const ülesanneElement = document.createElement('li');
+    ülesanneElement.textContent = ülesanded[praeguneÜlesandeIndeks];
+    ülesanneteNimekiri.innerHTML = '';
+    ülesanneteNimekiri.appendChild(ülesanneElement);
 }
 
-function refreshTask() {
-    let newTaskIndex;
-    do {
-        newTaskIndex = Math.floor(Math.random() * tasks.length);
-    } while (newTaskIndex === currentTaskIndex); // Исключаем повтор одного и того же задания
-
-    currentTaskIndex = newTaskIndex;
-    updateTask();
-    startTimer();
-    burgerIngredients = [];
-    updateBurgerPreview();
-}
-
-function startTimer() {
-    clearInterval(timerInterval);
-    timer = 30;
-    document.getElementById('timer-display').textContent = timer;
-
-    timerInterval = setInterval(() => {
-        timer--;
-        document.getElementById('timer-display').textContent = timer;
-        if (timer <= 0) {
-            clearInterval(timerInterval);
-            alert("Время вышло! Бургер не был собран вовремя.");
-            refreshTask(); // Обновляем задание после проигрыша
+function alustaTaimerit() {
+    taimeriIntervall = setInterval(() => {
+        taimer--;
+        document.getElementById('timer-display').textContent = taimer;
+        if (taimer <= 0) {
+            clearInterval(taimeriIntervall);
+            alert("Aeg on läbi! Sa ei jõudnud burgerit õigel ajal kokku panna.");
         }
     }, 1000);
 }
 
-function addIngredient(ingredient) {
-    burgerIngredients.push(ingredient);
-    updateBurgerPreview();
-    checkTaskCompletion();
+function lisaKoostisosa(koostisosa) {
+    burgeriKoostisosad.push(koostisosa);
+    uuendaBurgeriEelvaadet();
+    kontrolliÜlesandeTäitumist();
 }
 
-function updateBurgerPreview() {
-    const burgerList = document.getElementById('burger-list');
-    burgerList.innerHTML = '';
+function uuendaBurgeriEelvaadet() {
+    const burgeriNimekiri = document.getElementById('burger-list');
+    burgeriNimekiri.innerHTML = '';
 
-    burgerIngredients.forEach(ingredient => {
+    burgeriKoostisosad.forEach(koostisosa => {
         const li = document.createElement('li');
-        li.textContent = ingredient;
-        burgerList.appendChild(li);
+        li.textContent = koostisosa;
+        burgeriNimekiri.appendChild(li);
     });
 }
 
-function checkTaskCompletion() {
-    const task = tasks[currentTaskIndex];
+function kontrolliÜlesandeTäitumist() {
+    const ülesanne = ülesanded[praeguneÜlesandeIndeks];
 
-    const taskConditions = {
-        "Собери бургер из булочки, мяса и сыра": () =>
-            burgerIngredients.includes('Булочка') && burgerIngredients.includes('Мясо') && burgerIngredients.includes('Сыр'),
+    if (ülesanne === "Koosta burger kuklist, lihast ja juustust") {
+        if (burgeriKoostisosad.includes('Kukkel') && burgeriKoostisosad.includes('Liha') && burgeriKoostisosad.includes('Juust')) {
+            praeguneÜlesandeIndeks++;
+            uuendaÜlesannet();
+        }
+    }
 
-        "Добавь огурцы и помидоры": () =>
-            burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры'),
+    if (ülesanne === "Lisa kurgid ja tomatid") {
+        if (burgeriKoostisosad.includes('Kurgid') && burgeriKoostisosad.includes('Tomatid')) {
+            praeguneÜlesandeIndeks++;
+            uuendaÜlesannet();
+        }
+    }
 
-        "Сделай вегетарианский бургер с листьями салата, огурцами и помидорами": () =>
-            burgerIngredients.includes('Листья салата') && burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры'),
-
-        "Добавь двойной сыр и мясо": () =>
-            burgerIngredients.filter(ing => ing === 'Сыр').length >= 2 &&
-            burgerIngredients.filter(ing => ing === 'Мясо').length >= 2,
-
-        "Собери бургер с булочкой, листьями салата и сыром": () =>
-            burgerIngredients.includes('Булочка') && burgerIngredients.includes('Листья салата') && burgerIngredients.includes('Сыр')
-    };
-
-    if (taskConditions[task] && taskConditions[task]()) {
-        alert(`Задание выполнено: "${task}"`);
-        refreshTask(); // Выбираем новое задание после успешного выполнения
+    if (praeguneÜlesandeIndeks === ülesanded.length) {
+        alert("Palju õnne! Sa panid burgeri kõikide ülesannete järgi kokku!");
     }
 }
 
-function saveBurger() {
-    if (burgerIngredients.length === 0) {
-        alert("Ваш бургер пустой! Добавьте хотя бы один ингредиент.");
+function salvestaBurger() {
+    if (burgeriKoostisosad.length === 0) {
+        alert("Sinu burger on tühi! Lisa vähemalt üks koostisosa.");
         return;
     }
 
-    savedBurgers.push([...burgerIngredients]);
-    localStorage.setItem('savedBurgers', JSON.stringify(savedBurgers));
-    updateSavedBurgersTable();
+    salvestatudBurgerid.push([...burgeriKoostisosad]);
 
-    burgerIngredients = [];
-    updateBurgerPreview();
+    localStorage.setItem('salvestatudBurgerid', JSON.stringify(salvestatudBurgerid));
+
+    uuendaSalvestatudBurgeriteTabel();
+
+    burgeriKoostisosad = [];
+    uuendaBurgeriEelvaadet();
 }
 
-function updateSavedBurgersTable() {
+function uuendaSalvestatudBurgeriteTabel() {
     const tbody = document.querySelector('#burger-table tbody');
     tbody.innerHTML = '';
 
-    savedBurgers.forEach((burger, index) => {
-        const row = document.createElement('tr');
-        const cell1 = document.createElement('td');
-        const cell2 = document.createElement('td');
+    salvestatudBurgerid.forEach((burger, indeks) => {
+        const rida = document.createElement('tr');
+        const lahter1 = document.createElement('td');
+        const lahter2 = document.createElement('td');
 
-        cell1.textContent = index + 1;
-        cell2.textContent = burger.join(', ');
+        lahter1.textContent = indeks + 1;
+        lahter2.textContent = burger.join(', ');
 
-        row.appendChild(cell1);
-        row.appendChild(cell2);
-        tbody.appendChild(row);
+        rida.appendChild(lahter1);
+        rida.appendChild(lahter2);
+        tbody.appendChild(rida);
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('savedBurgers');
-    if (saved) {
-        savedBurgers = JSON.parse(saved);
-        updateSavedBurgersTable();
+    const salvestatud = localStorage.getItem('salvestatudBurgerid');
+    if (salvestatud) {
+        salvestatudBurgerid = JSON.parse(salvestatud);
+        uuendaSalvestatudBurgeriteTabel();
     }
-
-    updateTask();
-    startTimer();
-
-    const refreshButton = document.getElementById("refresh-task");
-    if (refreshButton) {
-        refreshButton.addEventListener("click", refreshTask);
-    }
+    uuendaÜlesannet();
+    alustaTaimerit();
 });
