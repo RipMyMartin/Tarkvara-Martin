@@ -31,13 +31,24 @@ h1 {
 }
 
 .ingredient {
-    padding: 10px 20px;
-    margin: 10px;
+    background: none;
+    border: none;
     cursor: pointer;
+    padding: 5px;
+}
+
+.ingredient img {
+    width: 50px;  /* Настроить размер изображения */
+    height: 50px;
+}
+
+
+.ingredient {
+
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+
 }
 
 .ingredient:hover {
