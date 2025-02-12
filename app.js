@@ -18,6 +18,7 @@ let currentTaskSet = [];
 
 function pickRandomTaskSet() {
     currentTaskSet = taskSets[Math.floor(Math.random() * taskSets.length)];
+    updateTask();
 }
 
 function updateTask() {
@@ -37,6 +38,7 @@ function startTimer() {
         if (timer <= 0) {
             clearInterval(timerInterval);
             alert("Время вышло! Бургер не был собран вовремя.");
+            pickRandomTaskSet();
         }
     }, 1000);
 }
@@ -82,6 +84,7 @@ function checkTaskCompletion() {
 
     if (allTasksCompleted) {
         alert("Поздравляем! Вы собрали бургер по всем заданиям!");
+        pickRandomTaskSet();
     }
 }
 
@@ -123,6 +126,5 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSavedBurgersTable();
     }
     pickRandomTaskSet();
-    updateTask();
     startTimer();
 });
