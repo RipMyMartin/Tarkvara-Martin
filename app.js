@@ -3,19 +3,31 @@ let savedBurgers = [];
 let timer = 30;
 let timerInterval;
 
-let tasks = [
-    "Собери бургер из булочки, мяса и сыра",
-    "Добавь огурцы и помидоры"
+let taskSets = [
+    ["Собери бургер из булочки, мяса и сыра"],
+    ["Добавь огурцы и помидоры"],
+    ["Сделай бургер с двумя слоями мяса"],
+    ["Добавь листья салата и сыр"],
+    ["Собери бургер без мяса"],
+    ["Сделай двойной бургер с двумя булочками"],
+    ["Добавь все ингредиенты"]
 ];
 
 let currentTaskIndex = 0;
+let currentTaskSet = [];
+
+function pickRandomTaskSet() {
+    currentTaskSet = taskSets[Math.floor(Math.random() * taskSets.length)];
+}
 
 function updateTask() {
     const taskList = document.getElementById('task-list');
-    const taskItem = document.createElement('li');
-    taskItem.textContent = tasks[currentTaskIndex];
     taskList.innerHTML = '';
-    taskList.appendChild(taskItem);
+    currentTaskSet.forEach(task => {
+        const taskItem = document.createElement('li');
+        taskItem.textContent = task;
+        taskList.appendChild(taskItem);
+    });
 }
 
 function startTimer() {
@@ -47,23 +59,28 @@ function updateBurgerPreview() {
 }
 
 function checkTaskCompletion() {
-    const task = tasks[currentTaskIndex];
-
-    if (task === "Собери бургер из булочки, мяса и сыра") {
-        if (burgerIngredients.includes('Булочка') && burgerIngredients.includes('Мясо') && burgerIngredients.includes('Сыр')) {
-            currentTaskIndex++;
-            updateTask();
+    let allTasksCompleted = currentTaskSet.every(task => {
+        switch (task) {
+            case "Собери бургер из булочки, мяса и сыра":
+                return burgerIngredients.includes('Булочка') && burgerIngredients.includes('Мясо') && burgerIngredients.includes('Сыр');
+            case "Добавь огурцы и помидоры":
+                return burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры');
+            case "Сделай бургер с двумя слоями мяса":
+                return burgerIngredients.filter(i => i === 'Мясо').length >= 2;
+            case "Добавь листья салата и сыр":
+                return burgerIngredients.includes('Листья салата') && burgerIngredients.includes('Сыр');
+            case "Собери бургер без мяса":
+                return !burgerIngredients.includes('Мясо');
+            case "Сделай двойной бургер с двумя булочками":
+                return burgerIngredients.filter(i => i === 'Булочка').length >= 2;
+            case "Добавь все ингредиенты":
+                return ['Булочка', 'Мясо', 'Сыр', 'Огурцы', 'Помидоры', 'Листья салата'].every(ing => burgerIngredients.includes(ing));
+            default:
+                return false;
         }
-    }
+    });
 
-    if (task === "Добавь огурцы и помидоры") {
-        if (burgerIngredients.includes('Огурцы') && burgerIngredients.includes('Помидоры')) {
-            currentTaskIndex++;
-            updateTask();
-        }
-    }
-
-    if (currentTaskIndex === tasks.length) {
+    if (allTasksCompleted) {
         alert("Поздравляем! Вы собрали бургер по всем заданиям!");
     }
 }
@@ -75,11 +92,8 @@ function saveBurger() {
     }
 
     savedBurgers.push([...burgerIngredients]);
-
     localStorage.setItem('savedBurgers', JSON.stringify(savedBurgers));
-
     updateSavedBurgersTable();
-
     burgerIngredients = [];
     updateBurgerPreview();
 }
@@ -108,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         savedBurgers = JSON.parse(saved);
         updateSavedBurgersTable();
     }
+    pickRandomTaskSet();
     updateTask();
     startTimer();
 });
