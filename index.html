@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Собери бургер</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <h1>Собери свой бургер</h1>
+
+  <!-- Таймер -->
+  <div id="timer">
+    Время: <span id="timer-display">30</span> секунд
+  </div>
+
+  <!-- Задачи -->
+  <div id="task-container">
+    <h2>Задача:</h2>
+    <ul id="task-list">
+      <li>Собери бургер из булочки, мяса и сыра</li>
+      <li>Добавь огурцы и помидоры</li>
+    </ul>
+  </div>
+
+  <div class="ingredients">
+    <h2>Ингредиенты</h2>
+    <button class="ingredient" onclick="addIngredient('Булочка')">Булочка</button>
+    <button class="ingredient" onclick="addIngredient('Мясо')">Мясо</button>
+    <button class="ingredient" onclick="addIngredient('Сыр')">Сыр</button>
+    <button class="ingredient" onclick="addIngredient('Огурцы')">Огурцы</button>
+    <button class="ingredient" onclick="addIngredient('Помидоры')">Помидоры</button>
+    <button class="ingredient" onclick="addIngredient('Листья салата')">Листья салата</button>
+  </div>
+
+  <div class="burger-preview">
+    <h2>Ваш бургер</h2>
+    <ul id="burger-list"></ul>
+    <button id="save-button" onclick="saveBurger()">Сохранить бургер</button>
+  </div>
+
+  <div class="saved-burgers">
+    <h2>Сохраненные бургеры</h2>
+    <table id="burger-table">
+      <thead>
+      <tr>
+        <th>Номер</th>
+        <th>Ингредиенты</th>
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
