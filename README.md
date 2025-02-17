@@ -6,3 +6,4 @@
 4. tee et ülesanded muudaksid iga kord
 5. stiilide muutmine ja ilusamaks muutmine
 6. tõlkida kõik eesti keelde
+7. Lisa veel üks ingridient
