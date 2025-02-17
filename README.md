@@ -6,5 +6,7 @@
 4. tee et ülesanded muudaksid iga kord
 5. stiilide muutmine ja ilusamaks muutmine
 6. tõlkida kõik eesti keelde
+
+# Uus Ylesanne
 7. Lisa veel üks ingridient
 8. Lisa veel üks foto ingridiendile
