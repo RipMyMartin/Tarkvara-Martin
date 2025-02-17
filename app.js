@@ -111,3 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     uuendaÜlesannet();
     alustaTaimerit();
 });
+
+// Lisa uus funktsionaalsus Jalopenie jaoks
+function addIngredient(ingredient) {
+    lisaKoostisosa(ingredient);
+}

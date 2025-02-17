@@ -9,64 +9,35 @@
 <body>
 <div class="container">
   <h1>Koosta oma burger</h1>
-
-  <!-- Taimer -->
-  <div id="timer">
-    Aeg: <span id="timer-display">30</span> sekundit
-  </div>
-
-  <!-- Ülesanded -->
+  <div id="timer">Aeg: <span id="timer-display">30</span> sekundit</div>
   <div id="task-container">
     <h2>Ülesanne:</h2>
-    <ul id="task-list">
-      <li>Koosta burger kuklist, lihast ja juustust</li>
-      <li>Lisa kurgid ja tomatid</li>
-    </ul>
+    <ul id="task-list"></ul>
   </div>
   <button id="refresh-task">Uuenda ülesannet</button>
-
   <div class="ingredients">
     <h2>Koostisosad</h2>
-    <button class="ingredient" onclick="addIngredient('Kukkel')">
-      <img src="img/1.jpg" alt="Kukkel">
-    </button>
-    <button class="ingredient" onclick="addIngredient('Liha')">
-      <img src="img/2.png" alt="Liha">
-    </button>
-    <button class="ingredient" onclick="addIngredient('Juust')">
-      <img src="img/3.png" alt="Juust">
-    </button>
-    <button class="ingredient" onclick="addIngredient('Kurgid')">
-      <img src="img/4.png" alt="Kurgid">
-    </button>
-    <button class="ingredient" onclick="addIngredient('Tomatid')">
-      <img src="img/5.png" alt="Tomatid">
-    </button>
-    <button class="ingredient" onclick="addIngredient('Salatilehed')">
-      <img src="img/6.png" alt="Salatilehed">
-    </button>
+    <button class="ingredient" onclick="addIngredient('Kukkel')"><img src="img/1.jpg" alt="Kukkel"></button>
+    <button class="ingredient" onclick="addIngredient('Liha')"><img src="img/2.png" alt="Liha"></button>
+    <button class="ingredient" onclick="addIngredient('Juust')"><img src="img/3.png" alt="Juust"></button>
+    <button class="ingredient" onclick="addIngredient('Kurgid')"><img src="img/4.png" alt="Kurgid"></button>
+    <button class="ingredient" onclick="addIngredient('Tomatid')"><img src="img/5.png" alt="Tomatid"></button>
+    <button class="ingredient" onclick="addIngredient('Salatilehed')"><img src="img/6.png" alt="Salatilehed"></button>
+    <button class="ingredient" onclick="addIngredient('Jalopenie')"><img src="img/7.png" alt="Jalopenie"></button>
   </div>
-
   <div class="burger-preview">
     <h2>Sinu burger</h2>
     <ul id="burger-list"></ul>
     <button id="save-button" onclick="saveBurger()">Salvesta burger</button>
   </div>
-
   <div class="saved-burgers">
     <h2>Salvestatud burgerid</h2>
     <table id="burger-table">
-      <thead>
-      <tr>
-        <th>Number</th>
-        <th>Koostisosad</th>
-      </tr>
-      </thead>
+      <thead><tr><th>Number</th><th>Koostisosad</th></tr></thead>
       <tbody></tbody>
     </table>
   </div>
 </div>
-
 <script src="app.js"></script>
 </body>
 </html>
